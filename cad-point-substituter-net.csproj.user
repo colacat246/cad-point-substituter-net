@@ -4,4 +4,8 @@
     <StartAction>Program</StartAction>
     <StartProgram>D:\home\whu\environment\run\cad2020\AutoCAD 2020\acad.exe</StartProgram>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <StartAction>Program</StartAction>
+    <StartProgram>D:\home\whu\environment\run\cad2020\AutoCAD 2020\acad.exe</StartProgram>
+  </PropertyGroup>
 </Project>

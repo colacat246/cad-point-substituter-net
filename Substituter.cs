@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* ==============================================================================
+ * 功能描述：$safeitemrootname$  
+ * 创 建 者：jyj
+ * 创建日期：$time$
+ * CLR Version :$clrversion$
+ * ==============================================================================*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +26,8 @@ namespace cad_point_substituter_net
         [CommandMethod("SubMP")]
         public async void SubMP()
         {
+            // 启动代码运行时间监视
+            //System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
             Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
             // 选择Dwg文件
             string dwgPath = SelectDwg();
@@ -27,6 +35,15 @@ namespace cad_point_substituter_net
             string[] txtPaths = SelectTxt();
             // 选择输出路径            
             string outputPath = SelectOutPutPath(); // 保存的路径没有最后一个反斜杠
+
+            // 检查路径是否为空
+            if(dwgPath == null || txtPaths == null || outputPath == null)
+            {
+                ed.WriteMessage("文件或输出路径未选择");
+                return;
+            }
+
+            // watch.Start();  //开始监视代码运行时间
 
             // 日志
             ArrayList log = new ArrayList();
@@ -107,6 +124,10 @@ namespace cad_point_substituter_net
             // 输出日志
             string[] logTotal = (string[])log.ToArray(typeof(string));
             File.WriteAllLines(outputPath + "\\SubstitutionLog-" + DateTime.Now.ToString().Replace("/", "-").Replace(" ", "--").Replace(":", "-") + ".txt", logTotal);
+            // watch.Stop();  //停止监视
+            // TimeSpan timespan = watch.Elapsed;  //获取当前实例测量得出的总时间
+            // ed.WriteMessage("测点替换完成，执行时间：{0}(毫秒)", timespan.TotalMilliseconds);  //总毫秒数
+            ed.WriteMessage("测点替换完成");  
         }
 
         // 弹出打开文件对话框，返回Dwg文件路径
